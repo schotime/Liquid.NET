@@ -8,8 +8,20 @@ using Liquid.NET.Constants;
 
 namespace Liquid.NET.Utils
 {
+    public class LiquidValueConverterOptions
+    {
+        public bool IgnoreKeyCase { get; set; }
+    }
+
     public class LiquidValueConverter
     {
+        public LiquidValueConverterOptions Options { get; set; }
+
+        public LiquidValueConverter()
+        {
+            Options = new LiquidValueConverterOptions();
+        }
+
         public Option<ILiquidValue> Convert(Object obj)
         {
             if (ReferenceEquals(obj, null))
@@ -34,7 +46,7 @@ namespace Liquid.NET.Utils
 
         private Option<ILiquidValue> FromObject(Object obj)
         {
-            var newHash = new LiquidHash();
+            var newHash = new LiquidHash(Options.IgnoreKeyCase);
             var kvps = obj.GetType()
                 .GetProperties()
                 .Where(property => !(property.GetCustomAttributes<LiquidIgnoreAttribute>().Any() 
@@ -135,7 +147,7 @@ namespace Liquid.NET.Utils
 
         private Option<ILiquidValue> CreateHash(IDictionary dict)
         {
-            var newHash = new LiquidHash();
+            var newHash = new LiquidHash(Options.IgnoreKeyCase);
             foreach (var key in dict.Keys)
             {
                 String keyAsStr = key.ToString();

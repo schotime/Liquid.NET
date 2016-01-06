@@ -10,5 +10,10 @@ namespace Liquid.NET.Utils
         {
             return new LiquidValueConverter().Convert(obj);
         }
+
+        public static Option<ILiquidValue> ToLiquid(this object obj, LiquidValueConverterOptions options)
+        {
+            return new LiquidValueConverter { Options = options }.Convert(obj);
+        }
     }
 }

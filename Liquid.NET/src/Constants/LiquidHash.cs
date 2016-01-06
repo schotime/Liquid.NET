@@ -11,9 +11,9 @@ namespace Liquid.NET.Constants
     {
         private readonly IDictionary<String, Option<ILiquidValue>> _value;
 
-        public LiquidHash()
+        public LiquidHash(bool ignoreKeyCase = false)
         {
-            _value = new Dictionary<String, Option<ILiquidValue>>();
+            _value = ignoreKeyCase ? new Dictionary<String, Option<ILiquidValue>>(StringComparer.OrdinalIgnoreCase) : new Dictionary<String, Option<ILiquidValue>>();
         }
 
         public override object Value

@@ -199,5 +199,20 @@ namespace Liquid.NET.Tests.Constants
             Assert.That(((LiquidString) opt.Value).StringVal, Is.EqualTo("test"));
         }
 
+        [Test]
+        public void It_Should_Access_Variable_By_Case_Insensitive_Key_When_Ignore_Case_Key_True()
+        {
+            var dict = new LiquidHash(true) { { "key", LiquidString.Create("test") } };
+            Assert.That(dict.ContainsKey("KEY"), Is.True);
+            Assert.That(dict.ContainsKey("key"), Is.True);
+        }
+
+        [Test]
+        public void It_Should_Not_Access_Variable_By_Case_Insensitive_Key_By_Default()
+        {
+            var dict = new LiquidHash { { "key", LiquidString.Create("test") } };
+            Assert.That(dict.ContainsKey("KEY"), Is.False);
+            Assert.That(dict.ContainsKey("key"), Is.True);
+        }
     }
 }
